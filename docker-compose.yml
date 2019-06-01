@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   database:
     image: mysql:5.7
@@ -28,3 +28,7 @@ services:
       APPCONFIG_DB_URL: 'jdbc:mysql://database:3306/archivesspace?useUnicode=true&characterEncoding=UTF-8&user=as&password=as123'
     links:
       - database
+    volumes:
+      -  /volume1/docker/data-archivessapce:/archivesspace/data
+      - /volume1/docker/config-archivessapce:/archivesspace/config
+      - /volume1/docker/plugins-archivessapce:/archivesspace/plugins

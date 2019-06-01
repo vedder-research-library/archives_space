@@ -29,6 +29,6 @@ services:
     links:
       - database
     volumes:
-      -  /volume1/docker/data-archivessapce:/archivesspace/data
-      - /volume1/docker/config-archivessapce:/archivesspace/config
-      - /volume1/docker/plugins-archivessapce:/archivesspace/plugins
+      -  /volume1/docker/data-archivesspace:/archivesspace/data
+      - /volume1/docker/config-archivesspace:/archivesspace/config
+      - /volume1/docker/plugins-archivesspace:/archivesspace/plugins

@@ -23,7 +23,6 @@ services:
       - /volume1/docker/Archivesspace/data-archivesspace:/archivesspace/data
       - /volume1/docker/Archivesspace/config-archivesspace:/archivesspace/config
       - /volume1/docker/Archivesspace/plugins-archivesspace:/archivesspace/plugins
-      - ./startup.sh:/archivesspace/startup.sh
     env_file:
       - database.env
     depends_on:

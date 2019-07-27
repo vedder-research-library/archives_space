@@ -16,7 +16,7 @@ RUN chown -R archivesspace:archivesspace /archivesspace
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update && \
     apt-get -y install --no-install-recommends \
-      mysql-clien && \
+      mysql-client && \
     rm -rf /var/lib/apt/lists/
 
 # Switch back to archivesspace

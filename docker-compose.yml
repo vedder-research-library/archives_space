@@ -23,6 +23,7 @@ services:
       - /volume1/docker/Archivesspace/data-archivesspace:/archivesspace/data
       - /volume1/docker/Archivesspace/config-archivesspace:/archivesspace/config
       - /volume1/docker/Archivesspace/plugins-archivesspace:/archivesspace/plugins
+      - ./startup.sh:/archivesspace/startup.sh
     environment:
       APPCONFIG_DB_URL: 'jdbc:mysql://database:3306/archivesspace?useUnicode=true&characterEncoding=UTF-8&user=as&password=as123'
     depends_on:

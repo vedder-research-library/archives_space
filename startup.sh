@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Get around mount permissions
-chown -R archivesspace:archivesspace /archivesspace
-
 DATA_TMP_DIR="${APPCONFIG_DATA_DIR:-"/archivesspace/data"}/tmp"
 
 # DEPLOY_PKG (optional): [./config/config.rb, ./plugins, ./stylesheets]
@@ -37,17 +34,20 @@ url_check=0
 
 if [[ -z $DB_ADDR ]]; then
   DB_ADDR="database"
-  url_check=$[url_check+1]
+else
+    url_check=$[url_check+1]
 fi
 
 if [[ -z $MYSQL_PORT ]]; then
   MYSQL_PORT=3306
-  url_check=$[url_check+1]
+else
+    url_check=$[url_check+1]
 fi
 
 if [[ -z $MYSQL_USER ]]; then
   MYSQL_USER="root"
-  url_check=$[url_check+1]
+else
+    url_check=$[url_check+1]
 fi
 
 if [[ -z $APPCONFIG_DB_URL ]] && [[ "$url_check" -eq "3" ]]; then

@@ -82,7 +82,7 @@ while ! mysql -h "$DB_ADDR" --port="$MYSQL_PORT" --user="$MYSQL_USER" --password
 
     >&1 echo "Connection failed, retrying in $MYSQL_CHECK_INTERVAL seconds."
     counter=`expr $counter + $MYSQL_CHECK_INTERVAL`
-    sle
+    sleep $MYSQL_CHECK_INTERVAL
 done
 
 /archivesspace/scripts/setup-database.sh

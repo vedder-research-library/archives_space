@@ -2,33 +2,28 @@ version: '3'
 services:
   database:
     image: mysql:5.7
-    command: --character-set-server=utf8 --collation-server=utf8_unicode_ci --innodb_buffer_pool_size=2G --innodb_buffer_pool_instances=2
+    restart: always
     ports:
       - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: "123456"
-      MYSQL_DATABASE: archivesspace
-      MYSQL_USER: as
-      MYSQL_PASSWORD: as123
-    restart: always
     volumes:
-      - /volume1/docker/mysql-archivesspace:/var/lib/mysql
+      - /volume1/docker/Archivesspace/mysql-archivesspace:/var/lib/mysql
+    command: --character-set-server=utf8 --collation-server=utf8_unicode_ci --innodb_buffer_pool_size=2G --innodb_buffer_pool_instances=2
+    env_file:
+      - database.env
   archivesspace:
     image: archivesspace/archivesspace:latest
+    restart: always
     ports:
       - "8080:8080"
       - "8081:8081"
       - "8082:8082"
       - "8089:8089"
       - "8090:8090"
-    depends_on:
-      - database
-    restart: always
+    volumes:
+      - /volume1/docker/Archivesspace/data-archivesspace:/archivesspace/data
+      - /volume1/docker/Archivesspace/config-archivesspace:/archivesspace/config
+      - /volume1/docker/Archivesspace/plugins-archivesspace:/archivesspace/plugins
     environment:
       APPCONFIG_DB_URL: 'jdbc:mysql://database:3306/archivesspace?useUnicode=true&characterEncoding=UTF-8&user=as&password=as123'
-    links:
+    depends_on:
       - database
-    volumes:
-      -  /volume1/docker/data-archivesspace:/archivesspace/data
-      - /volume1/docker/config-archivesspace:/archivesspace/config
-      - /volume1/docker/plugins-archivesspace:/archivesspace/plugins

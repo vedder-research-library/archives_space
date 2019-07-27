@@ -11,7 +11,7 @@ services:
     env_file:
       - database.env
   archivesspace:
-    image: archivesspace/archivesspace:latest
+    image: archivesspace_custom:latest
     restart: always
     ports:
       - "8080:8080"
@@ -23,6 +23,9 @@ services:
       - /volume1/docker/Archivesspace/data-archivesspace:/archivesspace/data
       - /volume1/docker/Archivesspace/config-archivesspace:/archivesspace/config
       - /volume1/docker/Archivesspace/plugins-archivesspace:/archivesspace/plugins
+    environment:
+      DB_ADDR: database
+      MYSQL_PORT: 3306
     env_file:
       - database.env
     depends_on:

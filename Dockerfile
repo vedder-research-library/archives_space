@@ -10,7 +10,7 @@ COPY ./startup.sh /archivesspace/startup.sh
 RUN mkdir -p /archivesspace/config /archivesspace/data
 
 # Change permission of archivesspace folder
-RUN chown archivesspace:archivesspace /archivesspace
+RUN chown -R archivesspace:archivesspace /archivesspace
 
 # Switch back to archivesspace
 USER archivesspace

@@ -74,7 +74,7 @@ counter=0
 
 echo "Waiting up to $MYSQL_DELAY seconds for MySQL. Checking every $MYSQL_CHECK_INTERVAL seconds."
 
-while ! mysql -h"$DB_ADDR" --port="$MYSQL_PORT" --user="$MYSQL_USER" --password="$MYSQL_PASSWORD" -e "show databases;" > /dev/null 2>&1; do
+while ! mysql -h "$DB_ADDR" --port="$MYSQL_PORT" --user="$MYSQL_USER" --password="$MYSQL_PASSWORD" -e "show databases;" > /dev/null 2>&1; do
     if [ $counter -gt $MYSQL_DELAY ]; then
         >&2 echo "We have been waiting for MySQL too long already; failing."
         exit 1

@@ -31,6 +31,47 @@ fi
 # clear out tmp pre-startup as it can build up if persisted
 rm -rf $DATA_TMP_DIR/*
 
+# Wait for MySQL server to become responsive
+
+if [[ -z $DB_ADDR ]]; then
+  DB_ADDR="db"
+fi
+
+if [[ -z $MYSQL_PORT ]]; then
+  MYSQL_PORT=3306
+fi
+
+if [[ -z $MYSQL_DELAY ]]; then
+  MYSQL_DELAY=60
+fi
+
+if [[ -z $MYSQL_CHECK_INTERVAL ]]; then
+  MYSQL_CHECK_INTERVAL=5
+fi
+
+if [[ -z $MYSQL_USER ]]; then
+  MYSQL_USER="root"
+fi
+
+if [[ -z $APPCONFIG_DB_URL ]]; then
+  export APPCONFIG_DB_URL="jdbc:mysql://${DB_ADDR}:${MYSQL_PORT}/archivesspace?useUnicode=true&characterEncoding=UTF-8&user=${MYSQL_USER}&password=${MYSQL_PASSWORD}"
+fi
+
+counter=0
+
+echo "Waiting up to $MYSQL_DELAY seconds for MySQL. Checking every $MYSQL_CHECK_INTERVAL seconds."
+
+while ! mysql -h"$DB_ADDR" --port="$MYSQL_PORT" --user="$MYSQL_USER" --password="$MYSQL_PASSWORD" -e "show databases;" > /dev/null 2>&1; do
+    if [ $counter -gt $MYSQL_DELAY ]; then
+        >&2 echo "We have been waiting for MySQL too long already; failing."
+        exit 1
+    fi;
+
+    >&1 echo "Connection failed, retrying in $MYSQL_CHECK_INTERVAL seconds."
+    counter=`expr $counter + $MYSQL_CHECK_INTERVAL`
+    sle
+done
+
 /archivesspace/scripts/setup-database.sh
 if [[ "$?" != 0 ]]; then
   echo "Error running the database setup script."
